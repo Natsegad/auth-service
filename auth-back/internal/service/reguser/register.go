@@ -19,6 +19,13 @@ func GenResponse(id uint64) auth.AuthUserRes {
 	return ret
 }
 
+func GenResponseJWT(id uint64, token string) auth.AuthUserRes {
+	ret := auth.AuthUserRes{}
+	ret.Id = id
+	ret.Token = token
+	return ret
+}
+
 func WriteUserInfo(info auth.AuthUserReq) {
 	file, err := ioutil.ReadFile("user.json")
 	if err != nil {
@@ -41,10 +48,4 @@ func WriteUserInfo(info auth.AuthUserReq) {
 		fmt.Printf("Dont write use info %s %s \n", info.Email, err.Error())
 		return
 	}
-}
-
-func readUserInfo(id uint64) auth.AuthUserRes {
-	ret := auth.AuthUserRes{}
-
-	return ret
 }

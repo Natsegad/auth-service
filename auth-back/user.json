@@ -1,1 +1,40 @@
-{"users":[{"email":"asdasd","password":"sdf","id":2681092352},{"email":"asdasd","password":"sdf","id":3672847253},{"email":"asdasd","password":"sdf","id":1623153023},{"email":"asdasd","password":"","id":2966705752}]}
+{
+    "users": [
+        {
+            "email": "asdasd",
+            "password": "sdf",
+            "id": 2681092352,
+            "jwt": ""
+        },
+        {
+            "email": "asdasd",
+            "password": "sdf",
+            "id": 3672847253,
+            "jwt": ""
+        },
+        {
+            "email": "asdasd",
+            "password": "sdf",
+            "id": 1623153023,
+            "jwt": ""
+        },
+        {
+            "email": "asdasd",
+            "password": "",
+            "id": 2966705752,
+            "jwt": ""
+        },
+        {
+            "email": "asdasd",
+            "password": "sdasd",
+            "id": 2987259915,
+            "jwt": ""
+        },
+        {
+            "email": "asdasd",
+            "password": "sdfd",
+            "id": 807811681,
+            "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGFpbXMiOnsiZXhwIjoxNjY1NzcyMTM0LCJpYXQiOjE2NjU3NzIxMzR9LCJpZCI6ODA3ODExNjgxfQ.XZT1P9fSI1E1IAFNpvdYqYdNVyJi_fQNqn-wINbePB4"
+        }
+    ]
+}

@@ -4,6 +4,7 @@ import (
 	serviceauth "auth/auth-back/internal/domain/auth"
 	"auth/auth-back/internal/service/reguser"
 	"auth/auth-back/internal/service/user"
+	pkgjwt "auth/auth-back/pkg/jwt"
 	"encoding/json"
 	"fmt"
 
@@ -26,11 +27,12 @@ func LoginPage(c *gin.Context) {
 		Email:    email[0],
 		Password: pass[0],
 		Id:       userId,
+		Token:    pkgjwt.GenerateJwtById(userId),
 	}
 
 	reguser.WriteUserInfo(userReq)
 
-	response := reguser.GenResponse(userId)
+	response := reguser.GenResponseJWT(userId, userReq.Token)
 
 	jsonUser, err := json.Marshal(&response)
 	if err != nil {
