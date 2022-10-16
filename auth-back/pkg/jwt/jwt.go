@@ -18,7 +18,7 @@ var secret string = "secret"
 func GenerateJwtById(id uint64) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &SClaims{
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(1 * time.Minute).Unix(),
+			ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
 		Id: id,
