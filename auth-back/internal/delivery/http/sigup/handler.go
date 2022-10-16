@@ -5,17 +5,16 @@ import (
 	"auth/auth-back/internal/service/reguser"
 	"auth/auth-back/internal/service/user"
 	pkgjwt "auth/auth-back/pkg/jwt"
-	"encoding/json"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
-func LoginPage(c *gin.Context) {
+func SignUpPage(c *gin.Context) {
 	err := c.Request.ParseForm()
 	if err != nil {
 		fmt.Printf("Error parseform %s \n", err.Error())
-		panic(nil)
+		panic("Error parseform ")
 	}
 
 	userId := user.GenUserId()
@@ -32,15 +31,15 @@ func LoginPage(c *gin.Context) {
 
 	reguser.WriteUserInfo(userReq)
 
-	response := reguser.GenResponseJWT(userId, userReq.Token)
+	// response := reguser.GenResponseJWT(userId, userReq.Token)
 
-	jsonUser, err := json.Marshal(&response)
-	if err != nil {
-		fmt.Printf("Error %s \n", err.Error())
-		panic(nil)
-	}
+	// jsonUser, err := json.Marshal(&response)
+	// if err != nil {
+	// 	fmt.Printf("Error %s \n", err.Error())
+	// 	panic(err.Error())
+	// }
 
-	fmt.Printf("%s %s \n", email, pass)
+	// fmt.Printf("%s %s \n", email, pass)
 
-	c.JSON(200, string(jsonUser))
+	c.JSON(200, userReq.Token)
 }

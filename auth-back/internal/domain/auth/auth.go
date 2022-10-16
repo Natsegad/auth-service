@@ -13,3 +13,12 @@ type AuthUserReq struct {
 	Id       uint64 `json:"id"`
 	Token    string `json:"jwt"`
 }
+
+type UsersJson struct {
+	Users map[uint64]AuthUserReq `json:"users"`
+}
+
+// Для проверки есть ли пользователь мы должны получить GET запрос с Id нужного пользователя
+type ValidUserJsonReq struct {
+	Id uint64 `json:"user_id"`
+}

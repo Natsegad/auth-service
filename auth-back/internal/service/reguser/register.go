@@ -8,10 +8,6 @@ import (
 	"io/ioutil"
 )
 
-type UsersJson struct {
-	Users []auth.AuthUserReq `json:"users"`
-}
-
 func GenResponse(id uint64) auth.AuthUserRes {
 	ret := auth.AuthUserRes{}
 	ret.Id = id
@@ -32,14 +28,17 @@ func WriteUserInfo(info auth.AuthUserReq) {
 		fmt.Printf("Dont write use info %s %s \n", info.Email, err.Error())
 		return
 	}
-
-	usersJson := UsersJson{}
-	err = json.Unmarshal(file, &usersJson)
-	if err != nil {
-		fmt.Printf("	err = json.Unmarshal(file,&usersJson) %s \n", err.Error())
+	usersJson := auth.UsersJson{}
+	if len(file) != 0 {
+		err = json.Unmarshal(file, &usersJson)
+		if err != nil {
+			fmt.Printf("err = json.Unmarshal(file,&usersJson) %s \n", err.Error())
+		}
+	} else {
+		usersJson.Users = make(map[uint64]auth.AuthUserReq)
 	}
 
-	usersJson.Users = append(usersJson.Users, info)
+	usersJson.Users[info.Id] = info
 
 	jsonStr, err := json.Marshal(&usersJson)
 
