@@ -25,17 +25,16 @@ func GenResponseJWT(id uint64, token string) auth.AuthUserRes {
 func WriteUserInfo(info auth.AuthUserReq) {
 	file, err := ioutil.ReadFile("user.json")
 	if err != nil {
-		fmt.Printf("Dont write use info %s %s \n", info.Email, err.Error())
+		fmt.Printf("Dont read user info %s %s \n", info.Email, err.Error())
 		return
 	}
 	usersJson := auth.UsersJson{}
+	usersJson.Users = make(map[uint64]auth.AuthUserReq)
 	if len(file) != 0 {
 		err = json.Unmarshal(file, &usersJson)
 		if err != nil {
 			fmt.Printf("err = json.Unmarshal(file,&usersJson) %s \n", err.Error())
 		}
-	} else {
-		usersJson.Users = make(map[uint64]auth.AuthUserReq)
 	}
 
 	usersJson.Users[info.Id] = info
@@ -44,7 +43,7 @@ func WriteUserInfo(info auth.AuthUserReq) {
 
 	err = ioutil.WriteFile("user.json", jsonStr, 0)
 	if err != nil {
-		fmt.Printf("Dont write use info %s %s \n", info.Email, err.Error())
+		fmt.Printf("Dont write user info %s %s \n", info.Email, err.Error())
 		return
 	}
 }
