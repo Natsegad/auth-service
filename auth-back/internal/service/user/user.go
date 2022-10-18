@@ -4,6 +4,7 @@ import (
 	"auth/auth-back/internal/domain/auth"
 	"auth/auth-back/internal/global"
 	"auth/auth-back/internal/service"
+	"auth/auth-back/pkg/db"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -33,19 +34,29 @@ func GetValidUserJson(body io.ReadCloser) auth.ValidUserJsonReq {
 }
 
 // Проверяет есть ли юзер в базе
-func CheckHaveUser(email, pass string) (bool, *auth.AuthUserReq) {
-	data, err := service.ReadUsers()
-	if err != nil {
-		fmt.Printf("Error ReadUsers %s \n", err.Error())
+func CheckHaveUser(email, pass string) (bool, *db.UserInfo) {
+	user := db.GetUserByEmail(email)
+	if user.Id == 0 {
 		return false, nil
-	}
+	} else {
 
-	for _, v := range data.Users {
-		v.Password = service.EncryptDecrypt(v.Password, global.XorKey)
-		if v.Email == email && v.Password == pass {
-			return true, &v
+		decrptPass := service.EncryptDecrypt(user.Pass, global.XorKey)
+		if decrptPass == pass {
+			return true, &user
 		}
 	}
+	// data, err := service.ReadUsers()
+	// if err != nil {
+	// 	fmt.Printf("Error ReadUsers %s \n", err.Error())
+	// 	return false, nil
+	// }
+
+	// for _, v := range data.Users {
+	// 	v.Password = service.EncryptDecrypt(v.Password, global.XorKey)
+	// 	if v.Email == email && v.Password == pass {
+	// 		return true, &v
+	// 	}
+	// }
 
 	return false, nil
 }
