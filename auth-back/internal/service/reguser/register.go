@@ -2,6 +2,8 @@ package reguser
 
 import (
 	"auth/auth-back/internal/domain/auth"
+	"auth/auth-back/internal/global"
+	"auth/auth-back/internal/service"
 	pkgjwt "auth/auth-back/pkg/jwt"
 	"encoding/json"
 	"fmt"
@@ -37,6 +39,7 @@ func WriteUserInfo(info auth.AuthUserReq) {
 		}
 	}
 
+	info.Password = service.EncryptDecrypt(info.Password, global.XorKey)
 	usersJson.Users[info.Id] = info
 
 	jsonStr, err := json.Marshal(&usersJson)

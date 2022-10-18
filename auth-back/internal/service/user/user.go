@@ -2,6 +2,7 @@ package user
 
 import (
 	"auth/auth-back/internal/domain/auth"
+	"auth/auth-back/internal/global"
 	"auth/auth-back/internal/service"
 	"encoding/json"
 	"fmt"
@@ -40,6 +41,7 @@ func CheckHaveUser(email, pass string) (bool, *auth.AuthUserReq) {
 	}
 
 	for _, v := range data.Users {
+		v.Password = service.EncryptDecrypt(v.Password, global.XorKey)
 		if v.Email == email && v.Password == pass {
 			return true, &v
 		}
